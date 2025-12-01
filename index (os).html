@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OS Algorithm Visualizer - Interactive Learning Platform</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="header">
+      <h1>🖥️ OS Algorithm Visualizer</h1>
+      <p>Interactive visualization of CPU Scheduling,</p>
+    </div>
+
+    <div class="container">
+      <div class="algorithm-nav">
+        <button class="nav-btn active" onclick="showSection('fcfs')">
+          FCFS
+        </button>
+        <button class="nav-btn" onclick="showSection('sjf')">SJF</button>
+        <button class="nav-btn" onclick="showSection('srtf')">SRTF</button>
+        <button class="nav-btn" onclick="showSection('rr')">Round Robin</button>
+        <button class="nav-btn" onclick="showSection('priority')">
+          Priority
+        </button>
+      </div>
+
+      <!-- FCFS Section -->
+      <div id="fcfs" class="content-section active">
+        <h2 class="section-title">First Come First Serve (FCFS)</h2>
+
+        <div class="info-box">
+          <h4>📚 Algorithm Info</h4>
+          <p>
+            FCFS is the simplest scheduling algorithm. Processes are executed in
+            the order they arrive. Non-preemptive algorithm.
+          </p>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="fcfs-processes">Number of Processes</label>
+            <input
+              type="number"
+              id="fcfs-processes"
+              min="1"
+              max="10"
+              value="4"
+              onchange="generateFCFSTable()"
+            />
+          </div>
+        </div>
+
+        <div class="process-table-container">
+          <table class="process-table" id="fcfs-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="fcfs-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="calculateFCFS()">
+            🚀 Calculate & Visualize
+          </button>
+          <button class="btn btn-danger" onclick="resetFCFS()">🔄 Reset</button>
+        </div>
+
+        <div id="fcfs-output"></div>
+      </div>
+
+      <!-- SJF Section -->
+      <div id="sjf" class="content-section">
+        <h2 class="section-title">Shortest Job First (SJF) - Non-Preemptive</h2>
+
+        <div class="info-box">
+          <h4>📚 Algorithm Info</h4>
+          <p>
+            SJF selects the process with the smallest burst time. Non-preemptive
+            version - once started, process runs to completion.
+          </p>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="sjf-processes">Number of Processes</label>
+            <input
+              type="number"
+              id="sjf-processes"
+              min="1"
+              max="10"
+              value="4"
+              onchange="generateSJFTable()"
+            />
+          </div>
+        </div>
+
+        <div class="process-table-container">
+          <table class="process-table" id="sjf-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="sjf-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="calculateSJF()">
+            🚀 Calculate & Visualize
+          </button>
+          <button class="btn btn-danger" onclick="resetSJF()">🔄 Reset</button>
+        </div>
+
+        <div id="sjf-output"></div>
+      </div>
+
+      <!-- SRTF Section -->
+      <div id="srtf" class="content-section">
+        <h2 class="section-title">Shortest Remaining Time First (SRTF)</h2>
+
+        <div class="info-box">
+          <h4>📚 Algorithm Info</h4>
+          <p>
+            SRTF is preemptive version of SJF. Process with shortest remaining
+            time gets CPU. Can switch between processes.
+          </p>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="srtf-processes">Number of Processes</label>
+            <input
+              type="number"
+              id="srtf-processes"
+              min="1"
+              max="10"
+              value="4"
+              onchange="generateSRTFTable()"
+            />
+          </div>
+        </div>
+
+        <div class="process-table-container">
+          <table class="process-table" id="srtf-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="srtf-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="calculateSRTF()">
+            🚀 Calculate & Visualize
+          </button>
+          <button class="btn btn-danger" onclick="resetSRTF()">🔄 Reset</button>
+        </div>
+
+        <div id="srtf-output"></div>
+      </div>
+
+      <!-- Round Robin Section -->
+      <div id="rr" class="content-section">
+        <h2 class="section-title">Round Robin (RR)</h2>
+
+        <div class="info-box">
+          <h4>📚 Algorithm Info</h4>
+          <p>
+            Each process gets a small unit of CPU time (time quantum). After
+            this time, process is preempted and added to end of queue.
+          </p>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="rr-processes">Number of Processes</label>
+            <input
+              type="number"
+              id="rr-processes"
+              min="1"
+              max="10"
+              value="4"
+              onchange="generateRRTable()"
+            />
+          </div>
+          <div class="input-group">
+            <label for="rr-quantum">Time Quantum</label>
+            <input type="number" id="rr-quantum" min="1" max="10" value="2" />
+          </div>
+        </div>
+
+        <div class="process-table-container">
+          <table class="process-table" id="rr-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="rr-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="calculateRR()">
+            🚀 Calculate & Visualize
+          </button>
+          <button class="btn btn-danger" onclick="resetRR()">🔄 Reset</button>
+        </div>
+
+        <div id="rr-output"></div>
+      </div>
+
+      <!-- Priority Section -->
+      <div id="priority" class="content-section">
+        <h2 class="section-title">Priority Scheduling (Non-Preemptive)</h2>
+
+        <div class="info-box">
+          <h4>📚 Algorithm Info</h4>
+          <p>
+            Each process has a priority number. CPU is allocated to process with
+            highest priority (lower number = higher priority).
+          </p>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-group">
+            <label for="priority-processes">Number of Processes</label>
+            <input
+              type="number"
+              id="priority-processes"
+              min="1"
+              max="10"
+              value="4"
+              onchange="generatePriorityTable()"
+            />
+          </div>
+        </div>
+
+        <div class="process-table-container">
+          <table class="process-table" id="priority-table">
+            <thead>
+              <tr>
+                <th>Process</th>
+                <th>Arrival Time</th>
+                <th>Burst Time</th>
+                <th>Priority</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="priority-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn btn-success" onclick="calculatePriority()">
+            🚀 Calculate & Visualize
+          </button>
+          <button class="btn btn-danger" onclick="resetPriority()">
+            🔄 Reset
+          </button>
+        </div>
+
+        <div id="priority-output"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>
+        Created by Suvojit & Pushpender (20251651094 & 20251651074)| CS443 OS
+        Project 2025
+      </p>
+      <p style="margin-top: 0.5rem; font-size: 0.9rem">
+        Built with HTML, CSS & JavaScript
+      </p>
+    </div>
+
+    <script src="script.js"></script>
+    <script></script>
+  </body>
+</html>
